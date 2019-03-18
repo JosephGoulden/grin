@@ -24,10 +24,10 @@ use ctrlc;
 
 use crate::config::GlobalConfig;
 use crate::core::global;
+use crate::display::lcd;
 use crate::p2p::{PeerAddr, Seeding};
 use crate::servers;
 use crate::tui::ui;
-use crate::display::lcd;
 
 /// wrap below to allow UI to clean up on stop
 pub fn start_server(config: servers::ServerConfig) {

@@ -32,8 +32,8 @@ use grin_util as util;
 use std::process::exit;
 
 mod cmd;
-pub mod tui;
 pub mod display;
+pub mod tui;
 
 // include build information
 pub mod built_info {

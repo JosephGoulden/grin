@@ -398,11 +398,8 @@ impl Server {
 		self.chain.header_head().unwrap()
 	}
 
-	/// Returns a set of stats about this server. This and the ServerStats
-	/// structure
-	/// can be updated over time to include any information needed by tests or
-	/// other
-	/// consumers
+	/// Returns a set of stats about this server. This and the ServerStats structure
+	/// can be updated over time to include any information needed by tests or other consumers
 	pub fn get_server_stats(&self) -> Result<ServerStats, Error> {
 		let stratum_stats = self.state_info.stratum_stats.read().clone();
 

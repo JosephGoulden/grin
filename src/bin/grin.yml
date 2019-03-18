@@ -41,6 +41,11 @@ subcommands:
             short: w
             long: wallet_url
             takes_value: true
+        - lcd:
+            help: Should use LCD display
+            short: l
+            long: lcd
+            takes_value: true
       subcommands:
         - config:
             about: Generate a configuration grin-server.toml file in the current directory

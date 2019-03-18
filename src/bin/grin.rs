@@ -33,6 +33,7 @@ use std::process::exit;
 
 mod cmd;
 pub mod tui;
+pub mod display;
 
 // include build information
 pub mod built_info {

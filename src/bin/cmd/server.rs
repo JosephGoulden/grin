@@ -27,6 +27,7 @@ use crate::core::global;
 use crate::p2p::{PeerAddr, Seeding};
 use crate::servers;
 use crate::tui::ui;
+use crate::display::lcd;
 
 /// wrap below to allow UI to clean up on stop
 pub fn start_server(config: servers::ServerConfig) {
@@ -47,6 +48,7 @@ fn start_server_tui(config: servers::ServerConfig) {
 		warn!("Starting GRIN in UI mode...");
 		servers::Server::start(config, |serv: Arc<servers::Server>| {
 			let running = Arc::new(AtomicBool::new(true));
+			let serv2 = serv.clone();
 			let _ = thread::Builder::new()
 				.name("ui".to_string())
 				.spawn(move || {
@@ -54,6 +56,12 @@ fn start_server_tui(config: servers::ServerConfig) {
 						panic!("Error loading UI controller: {}", e);
 					});
 					controller.run(serv.clone(), running);
+				});
+			let _ = thread::Builder::new()
+				.name("lcd".to_string())
+				.spawn(move || {
+					let mut lcd = lcd::Lcd::new();
+					lcd.run(serv2.clone());
 				});
 		})
 		.unwrap();

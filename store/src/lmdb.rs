@@ -75,7 +75,7 @@ pub fn new_named_env(path: String, name: String, max_readers: Option<u32>) -> lm
 	// (which we don't support anyway)
 
 	#[cfg(not(target_os = "windows"))]
-	env_builder.set_mapsize(5_368_709_120).unwrap_or_else(|e| {
+	env_builder.set_mapsize(4_294_967_295).unwrap_or_else(|e| {
 		panic!("Unable to allocate LMDB space: {:?}", e);
 	});
 	//TODO: This is temporary to support (beta) windows support

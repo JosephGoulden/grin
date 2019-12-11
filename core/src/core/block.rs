@@ -23,8 +23,7 @@ use crate::core::{
 	transaction, Commitment, Input, KernelFeatures, Output, Transaction, TransactionBody, TxKernel,
 	Weighting,
 };
-use crate::global;
-use crate::pow::{verify_size, Difficulty, Proof, ProofOfWork};
+use crate::pow::{verify_size, Difficulty, ProofOfWork};
 use crate::ser::{self, FixedLength, PMMRable, Readable, Reader, Writeable, Writer};
 use chrono::naive::{MAX_DATE, MIN_DATE};
 use chrono::prelude::{DateTime, NaiveDateTime, Utc};
@@ -501,32 +500,6 @@ impl Default for Block {
 }
 
 impl Block {
-	/// Builds a new block from the header of the previous block, a vector of
-	/// transactions and the private key that will receive the reward. Checks
-	/// that all transactions are valid and calculates the Merkle tree.
-	///
-	/// TODO - Move this somewhere where only tests will use it.
-	/// *** Only used in tests. ***
-	///
-	#[warn(clippy::new_ret_no_self)]
-	pub fn new(
-		prev: &BlockHeader,
-		txs: Vec<Transaction>,
-		difficulty: Difficulty,
-		reward_output: (Output, TxKernel),
-	) -> Result<Block, Error> {
-		let mut block =
-			Block::from_reward(prev, txs, reward_output.0, reward_output.1, difficulty)?;
-
-		// Now set the pow on the header so block hashing works as expected.
-		{
-			let proof_size = global::proofsize();
-			block.header.pow.proof = Proof::random(proof_size);
-		}
-
-		Ok(block)
-	}
-
 	/// Hydrate a block from a compact block.
 	/// Note: caller must validate the block themselves, we do not validate it
 	/// here.

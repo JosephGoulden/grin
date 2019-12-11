@@ -24,6 +24,7 @@ use grin_core::libtx::{
 use grin_core::pow::Difficulty;
 use grin_core::ser::{self, FixedLength, PMMRable, Readable, Reader, Writeable, Writer};
 use keychain::{Identifier, Keychain};
+use test_utils::core::TestBlock;
 
 // utility producing a transaction with 2 inputs and a single outputs
 #[allow(dead_code)]
